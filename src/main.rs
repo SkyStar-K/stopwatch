@@ -1,7 +1,9 @@
-use std::io;
-use std::thread;
-use std::time::Duration;
-use chrono::NaiveTime;
+use std::{
+    io::{self, Write},
+    thread,
+    time::Duration,
+};
+use chrono::{NaiveTime};
 
 fn main() {
     let mut watch_hh: u32 = 0;
@@ -20,10 +22,13 @@ fn main() {
     let mut stopwatch_ss: u32 = stopwatch_ss.trim().parse().unwrap();
 
     let handle = thread::spawn(move|| {
+
         loop {
             let stopwatch = NaiveTime::from_hms(stopwatch_hh, stopwatch_mm, stopwatch_ss);
             
-            println!("{:?} - STOPWATCH", stopwatch);
+            print!("{:?} - STOPWATCH\r", stopwatch);
+            
+            io::stdout().flush().unwrap();
 
             if stopwatch_hh == 0 && stopwatch_mm == 0 && stopwatch_ss == 0 {
                 break;
@@ -41,12 +46,14 @@ fn main() {
             thread::sleep(Duration::from_secs(1));
         }
     });
-    println!("{}", stopwatch_ss);
+
     loop {
         let watch = NaiveTime::from_hms(watch_hh, watch_mm, watch_ss);
-        
-        println!("{:?} - WATCH", watch);
-        
+
+        print!("\r{:?} - WATCH ", watch);
+
+        io::stdout().flush().unwrap();
+
         if watch_mm == 59 && watch_ss == 59 {
             watch_hh += 1;
             watch_mm = 0;
