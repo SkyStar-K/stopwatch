@@ -10,16 +10,13 @@ fn main() {
     let mut watch_mm: u32 = 0;
     let mut watch_ss: u32 = 0;
 
-    let mut stopwatch_hh = String::new();
-    let mut stopwatch_mm = String::new();
-    let mut stopwatch_ss = String::new();
-    
-    std::io::stdin().read_line(&mut stopwatch_hh).unwrap();
-    let mut stopwatch_hh: u32 = stopwatch_hh.trim().parse().unwrap();
-    std::io::stdin().read_line(&mut stopwatch_mm).unwrap();
-    let mut stopwatch_mm: u32 = stopwatch_mm.trim().parse().unwrap();
-    std::io::stdin().read_line(&mut stopwatch_ss).unwrap();
-    let mut stopwatch_ss: u32 = stopwatch_ss.trim().parse().unwrap();
+    let mut input = String::new();
+
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let mut stopwatch_hh: u32 = input[0..2].trim().parse().unwrap();
+    let mut stopwatch_mm: u32 = input[2..4].trim().parse().unwrap();
+    let mut stopwatch_ss: u32 = input[4..6].trim().parse().unwrap();
 
     let handle = thread::spawn(move|| {
 
